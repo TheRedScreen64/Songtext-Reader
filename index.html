@@ -32,7 +32,7 @@
               <li><a class="dropdown-item" href="#" onclick="sort()">A-Z</a></li>
               <li><a class="dropdown-item" href="#" onclick="sortReverse()">Z-A</a></li>
             </ul>
-            <input type="text" id="search" name="search" class="form-control" placeholder="Search..." oninput="search(document.getElementById('search').value)">
+            <input type="text" id="search" name="search" class="form-control" placeholder="Search..." oninput="search(document.getElementById('search').value.toLowerCase())">
           </div>
           <ul id="filelist" class="list-group bg-light"></ul>
         </div>
@@ -89,7 +89,7 @@
     output.innerHTML = ''
     fs.readdirSync(scanDirectory).forEach(file => {
       try{
-        if(file.indexOf(keyword) > -1){
+        if(file.toLowerCase().indexOf(keyword) > -1){
           if(file.indexOf('.txt') > -1 ||file.indexOf('.png') > -1 || file.indexOf('.pdf') > -1 ){
             var item = document.createElement("li");
             item.innerHTML = file;
