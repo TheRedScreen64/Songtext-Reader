@@ -1,6 +1,6 @@
 const { app, BrowserWindow, autoUpdater, dialog  } = require('electron')
 
-let mainWindow
+let mainWindow;
 
 //Functions
 function createWindow () {
