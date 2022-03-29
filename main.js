@@ -1,8 +1,5 @@
-//Import
 const { app, BrowserWindow, autoUpdater, dialog  } = require('electron')
-const fs = require('fs');
 require('update-electron-app')()
-
 
 let mainWindow
 
