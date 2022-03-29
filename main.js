@@ -1,12 +1,6 @@
 const { app, BrowserWindow, autoUpdater, dialog  } = require('electron')
-require('update-electron-app')()
 
 let mainWindow
-
-const server = 'https://github.com'
-const url = `${server}/TheRedScreen64/Songtext-Reader/releases/${app.getVersion()}`
-
-autoUpdater.setFeedURL({ url })
 
 //Functions
 function createWindow () {
@@ -27,6 +21,11 @@ function createWindow () {
     mainWindow.removeMenu()
     // mainWindow.webContents.openDevTools()
 
+    require('update-electron-app')({
+        repo: 'TheRedScreen64/Songtext-Reader',
+        logger: require('electron-log')
+    })
+
     mainWindow.on('close', () => {
         app.quit()
     })
@@ -45,22 +44,3 @@ app.on('activate', function() {
       createWindow();
     }
 });
-
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-    }
-  
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    })
-})
-
-autoUpdater.on('error', message => {
-    console.error('There was a problem updating the application')
-    console.error(message)
-})
