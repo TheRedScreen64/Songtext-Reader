@@ -1,4 +1,4 @@
-const { app, BrowserWindow, autoUpdater, ipcMain  } = require('electron');
+const { app, BrowserWindow, ipcMain  } = require('electron');
 
 let mainWindow;
 let settingsWindow;
@@ -20,12 +20,7 @@ function createWindow () {
   
     mainWindow.loadFile('index.html')
     mainWindow.removeMenu()
-    mainWindow.webContents.openDevTools()
-
-    require('update-electron-app')({
-        repo: 'TheRedScreen64/Songtext-Reader',
-        logger: require('electron-log')
-    })
+    //mainWindow.webContents.openDevTools()
 
     mainWindow.on('close', () => {
         app.quit()
@@ -46,7 +41,7 @@ function createSettingsWindow(){
   
     settingsWindow.loadFile('settings.html')
     settingsWindow.removeMenu()
-    settingsWindow.webContents.openDevTools()
+    //settingsWindow.webContents.openDevTools()
 }
 
 app.on('ready', createWindow);

@@ -56,15 +56,18 @@
   const os = require ('os');
   const username = os.userInfo ().username;
 
-  var allowedFileTypes = ['txt', 'png', 'pdf']
+  var allowedFileTypes = []
 
-  fs.readFile('C:/Users/' + username + '/Documents/SongtextReader_Data.txt', 'utf8' , (err, data) => {
+  fs.readFile('C:/Users/' + username + '/Documents/SongtextReader_Data.json', 'utf8' , (err, data) => {
     if (err) {
       console.log(err)
       return
     }
-    document.getElementById('folder').value = data
-    updateList(data)
+    json = JSON.parse(data)
+    console.log(json, json.directory)
+    document.getElementById('folder').value = json.directory
+    allowedFileTypes = json.allowedExtensions
+    updateList(json.directory)
   })
 
   function sortReverse(){
@@ -155,9 +158,11 @@
     })
   }
 
-  function saveScanDirectory(directory){
+  function saveScanDirectory(scanDirectory){
+    data = { directory: scanDirectory, allowedExtensions: allowedFileTypes }
+    json = JSON.stringify(data, null, 4)
     try {
-      fs.writeFileSync('C:/Users/' + username + '/Documents/SongtextReader_Data.txt', directory , 'utf-8')
+      fs.writeFileSync('C:/Users/' + username + '/Documents/SongtextReader_Data.json', json , 'utf-8')
     } catch(e) {
       console.log(e)
     }
